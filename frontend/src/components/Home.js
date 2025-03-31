@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-
+import "./Home.css"
 
 
 const Home = () => {
@@ -10,14 +10,14 @@ const Home = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    
+
     if (!token) {
       navigate("/login");
       return;
     }
 
     try {
-      const decoded = jwtDecode(token);
+      const decoded = jwtDecode(token); // Use jwt_decode function
       setUsername(decoded.name);
     } catch (error) {
       localStorage.removeItem("token");
@@ -32,13 +32,29 @@ const Home = () => {
 
   return (
     <div className="home-container">
-      <h1>Welcome to the Home Page</h1>
-      <div className="greeting">
-        Hello, <span className="username">{username}</span>!
+      <nav className="navbar">
+        <h1 className="app-title">Airify</h1>
+        <ul className="nav-links">
+          <li>User Account</li>
+          <li>Chatbot</li>
+          <li>Tools</li>
+          <li>Community</li>
+        </ul>
+      </nav>
+      <div className="welcome-section">
+        <h2>Welcome to Airify</h2>
+        <div className="greeting">
+          Hello, <span className="username">{username}</span>!
+        </div>
+        <button onClick={handleLogout} className="logout-btn">
+          Logout
+        </button>
       </div>
-      <button onClick={handleLogout} className="logout-btn">
-        Logout
-      </button>
+      <div className="dashboard">
+        {/* Placeholder for real-time air quality data and visualizations */}
+        <h3>Real-Time Air Quality Data</h3>
+        {/* Add components for data visualization here */}
+      </div>
     </div>
   );
 };
